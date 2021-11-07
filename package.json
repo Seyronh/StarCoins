@@ -9,8 +9,16 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Seyronh/StarCoins.git"
+  },
   "author": "Seyron",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Seyronh/StarCoins/issues"
+  },
+  "homepage": "https://github.com/Seyronh/StarCoins#readme",
   "dependencies": {
     "signalhub": "^4.9.0",
     "webrtc-swarm": "^2.9.0",
