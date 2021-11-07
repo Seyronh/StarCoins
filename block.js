@@ -31,7 +31,7 @@ class Block {
       blocke.accounts = info.accounts
       blocke.nonce = info.nonce
       blocke.difficulty = info.difficulty
-      return 
+      return blocke
     }
 }
 module.exports = Block;

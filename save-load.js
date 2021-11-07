@@ -19,10 +19,10 @@ class saveloadSystem {
             this.file = fs.readFileSync("./save.json", { encoding: "utf8" });
         }
         let parsed = JSON.parse(this.file)
-        parsed.blockpool.map(blockk => {
+        parsed.blockpool = parsed.blockpool.map(blockk => {
             return block.from(blockk)
         })
-        parsed.chain.map(blockk => {
+        parsed.chain = parsed.chain.map(blockk => {
             return block.from(blockk)
         })
         return parsed
