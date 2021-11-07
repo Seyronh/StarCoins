@@ -17,6 +17,8 @@ class Chain {
         this.accountManager.accounts = this.savedinfo.accounts
         this.blockpool = this.savedinfo.blockpool
         this.chain = this.savedinfo.chain
+      } else {
+        saveloadsystem.save(this.blockpool,this.chain,this.accountManager.accounts)
       }
     }
     getLastBlock(){
