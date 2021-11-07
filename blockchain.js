@@ -71,8 +71,13 @@ class Chain {
     }
     minar(publicKey){
       let blockss = this.blockpool
+      const blocksslength = blockss.length
       if(blockss.length <= 0) return;
       let blockmined = []
+      let pago = 0.5
+      for(let i = 0;i<blocksslength;i++){
+        blockss.push(new Block(this.getLastBlock().getHash(),this.accountManager.accounts, new Transaction(pago, "temp", publicKey)))
+      }
       for(let i = 0;i<blockss.length;i++){
         let block = blockss[i]
         if(this.log){
@@ -80,7 +85,7 @@ class Chain {
         }
         block.transaction.senderPublicKey = block.transaction.senderPublicKey.replace(/\\n/g,'\n')
         block.transaction.recieverPublicKey = block.transaction.recieverPublicKey.replace(/\\n/g,'\n')
-        if(this.accountManager.getBalance(block.transaction.senderPublicKey)-block.transaction.amount<0){
+        if(block.transaction.senderPublicKey !== 'temp'&&this.accountManager.getBalance(block.transaction.senderPublicKey)-block.transaction.amount<0){
           return;
         }
         this.accountManager.increment(block.transaction.recieverPublicKey,block.transaction.amount)
@@ -96,10 +101,12 @@ class Chain {
           console.log(`Terminado de minar el bloque: ${i+1}/${blockss.length} con dificultad: ${block.difficulty}`)
         }
         blockmined.push(block)
+        if(blockmined[0] !== undefined&&(blockss.length-1)!==i){
+          blockss[i+1].previousHash = blockmined[blockmined.length-1].getHash()
+        }
       }
       this.blockpool = []
       this.chain = this.chain.concat(blockmined);
-      this.accountManager.increment(publicKey,blockss.length/2)
       saveloadsystem.save(this.blockpool,this.chain,this.accountManager.accounts)
       peermanager.enviarCadena(this.chain);
       if(this.log){
