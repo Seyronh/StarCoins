@@ -1,0 +1,19 @@
+{
+  "name": "starcoins",
+  "version": "1.0.2",
+  "description": "Crypto currency.",
+  "keywords": [
+    "Crypto"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Seyron",
+  "license": "ISC",
+  "dependencies": {
+    "signalhub": "^4.9.0",
+    "webrtc-swarm": "^2.9.0",
+    "wrtc": "^0.4.7"
+  }
+}
