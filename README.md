@@ -48,3 +48,9 @@ cartera.send(cantidad,clavedestino)
 const cartera = require('safecoins')
 cartera.minar() //Minara todos los bloques de la blockpool si eres capaz de hacerlo antes que otra persona te llevaras la recompensa de safecoins (cada bloque son 0.5 safecoins)
 ```
+## Opciones extra
+Logs: Cuando se activa esta opción saldra en la consola todo lo que ocurre(puede llenar la consola de mensajes muy facilmente)
+```js
+const cartera = require('safecoins')
+Cartera.Chain.instance.log = true;
+```
