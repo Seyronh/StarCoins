@@ -1,9 +1,11 @@
 {
   "name": "starcoins",
-  "version": "1.0.2",
+  "version": "1.0.6",
   "description": "Crypto currency.",
   "keywords": [
-    "Crypto"
+    "Crypto",
+    "Currency",
+    "Crypto Coin"
   ],
   "main": "index.js",
   "scripts": {
