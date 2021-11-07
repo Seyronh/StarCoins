@@ -34,8 +34,6 @@ class Wallet {
           this.publicKey,
           recieverPublicKey
         );
-        this.Chain.instance.accountManager.increment(recieverPublicKey,amount)
-        this.Chain.instance.accountManager.decrement(this.publicKey,amount)
         const shaSign = crypto.createSign("SHA256");
         shaSign.update(transaction.toString()).end();
         const signature = shaSign.sign(this.privateKey);
