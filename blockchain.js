@@ -38,7 +38,6 @@ class Chain {
           }
             this.chain = blockchain;
             this.accountManager.accounts = this.chain[this.chain.length-1].accounts
-            this.blockpool = this.chain[this.chain.length-1].blockpool
         }
     }
     static Verify(blockchain){
@@ -96,5 +95,9 @@ peermanager.on('NuevaCadena',cadena => {
 });
 peermanager.on('NuevaBlockpool',blockpool => {
   Chain.instance.blockpool = blockpool;
+});
+peermanager.on('Nuevopeer',id => {
+  peermanager.enviarCadena(Chain.instance.chain)
+  peermanager.enviarBlockpool(Chain.instance.blockpool)
 });
 module.exports = Chain;
