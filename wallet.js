@@ -28,7 +28,7 @@ class Wallet {
     send(amount, recieverPublicKey) {
         if(!this.binded) return;
         this.balance = this.Chain.instance.accountManager.getBalance(this.publicKey)
-        if(amount < this.balance){
+        if(amount <= this.balance && amount >= 0.5){
         const transaction = new Transaction(
           amount,
           this.publicKey,
@@ -41,13 +41,15 @@ class Wallet {
         }
     }
     get publickey(){
-        return JSON.stringify(this.publicKey);
+        let clave = JSON.stringify(this.publicKey);
+        clave.split(" ").join("\n")
+        return clave;
     }
     get Balance(){
         this.balance = this.Chain.instance.accountManager.getBalance(this.publicKey)
         return this.balance;
     }
-    obtenerBlockPool(){
+    obtenerBlockpool(){
         if(!this.binded) return;
         return this.Chain.instance.blockpool;
     }
