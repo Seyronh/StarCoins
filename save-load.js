@@ -27,7 +27,7 @@ class saveloadSystem {
             "chain":chain,
             "accounts":accounts
         }
-        fs.writeFileSync("./save.json", JSON.stringify(defaultjson));          
+        fs.writeFileSync("./save.json", JSON.stringify(newjson));          
     }
 }
 const saveloadsystem = new saveloadSystem()
