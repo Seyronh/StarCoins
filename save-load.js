@@ -1,5 +1,5 @@
 const fs = require('fs');
-
+const block = require('./block.js')
 
 class saveloadSystem {
     constructor (){
@@ -18,7 +18,14 @@ class saveloadSystem {
                 fs.writeFileSync("./save.json", JSON.stringify(defaultjson));
             this.file = fs.readFileSync("./save.json", { encoding: "utf8" });
         }
-        return JSON.parse(this.file)
+        let parsed = JSON.parse(this.file)
+        parsed.blockpool.map(blockk => {
+            return block.from(blockk)
+        })
+        parsed.chain.map(blockk => {
+            return block.from(blockk)
+        })
+        return parsed
     }
     save(blockpool,chain,accounts){
         const newjson = {

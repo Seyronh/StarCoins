@@ -23,5 +23,15 @@ class Block {
     toString() {
         return JSON.stringify(this);
     }
+    static from(info){
+      let blocke = new Block()
+      blocke.previousHash = info.previousHash
+      blocke.transaction = info.transaction
+      blocke.timestamp = info.timestamp
+      blocke.accounts = info.accounts
+      blocke.nonce = info.nonce
+      blocke.difficulty = info.difficulty
+      return 
+    }
 }
 module.exports = Block;
