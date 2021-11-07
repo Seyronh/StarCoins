@@ -1,7 +1,7 @@
 var swarm = require('webrtc-swarm')
 var signalhub = require('signalhub')
 const EventEmitter = require('events')
-const Chain = requiere('./blockchain.js')
+const Chain = require('./blockchain.js')
 class PeerManager extends EventEmitter {
     constructor(){
         super()

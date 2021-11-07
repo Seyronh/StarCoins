@@ -4,6 +4,7 @@ const Transaction = require('./transaction.js')
 const accountManager = require('./accounts.js')
 const PeerManager = require('./peers.js')
 const peermanager = new PeerManager()
+const saveloadsystem = require('./save-load.js')
 class Chain {
     static instance = new Chain();
     constructor() {
@@ -11,6 +12,12 @@ class Chain {
       this.blockpool = [];
       this.chain = [new Block("",this.accountManager.accounts,new Transaction(100, "temp", "temp"))];
       this.log = false;
+      this.savedinfo = saveloadsystem.load()
+      if(this.savedinfo.iniated){
+        this.accountManager.accounts = this.savedinfo.accounts
+        this.blockpool = this.savedinfo.blockpool
+        this.chain = this.savedinfo.chain
+      }
     }
     getLastBlock(){
       return this.chain[this.chain.length - 1]
@@ -25,6 +32,7 @@ class Chain {
         }
         const block = new Block(this.getLastBlock().getHash(),this.accountManager.accounts, transaction);
         this.blockpool.push(block)
+        saveloadsystem.save(this.blockpool,this.chain,this.accountManager.accounts)
         peermanager.enviarBlockpool(this.blockpool);
       }
     }
@@ -38,6 +46,7 @@ class Chain {
           }
             this.chain = blockchain;
             this.accountManager.accounts = this.chain[this.chain.length-1].accounts
+            saveloadsystem.save(this.blockpool,this.chain,this.accountManager.accounts)
         }
     }
     static Verify(blockchain){
@@ -84,6 +93,7 @@ class Chain {
         blockmined.push(block)
       }
       this.chain = this.chain.concat(blockmined);
+      saveloadsystem.save(this.blockpool,this.chain,this.accountManager.accounts)
       peermanager.enviarCadena(this.chain);
       if(this.log){
         console.log(`Se ha completado el minado de ${blockss.length} bloques recompensa añadida y nueva cadena enviada`)
@@ -95,6 +105,7 @@ peermanager.on('NuevaCadena',cadena => {
 });
 peermanager.on('NuevaBlockpool',blockpool => {
   Chain.instance.blockpool = blockpool;
+  saveloadsystem.save(Chain.instance.blockpool,Chain.instance.chain,Chain.instance.accountManager.accounts)
 });
 peermanager.on('Nuevopeer',id => {
   peermanager.enviarCadena(Chain.instance.chain)
