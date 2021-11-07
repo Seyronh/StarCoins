@@ -103,14 +103,29 @@ class Chain {
     }
 }
 peermanager.on('NuevaCadena',cadena => {
+  if(Chain.instance.log){
+    console.log("BlockChain recibida")
+  }
   Chain.instance.replaceblockchain(cadena);
 });
 peermanager.on('NuevaBlockpool',blockpool => {
+  if(Chain.instance.log){
+    console.log("Blockpool recibida")
+  }
   Chain.instance.blockpool = blockpool;
   saveloadsystem.save(Chain.instance.blockpool,Chain.instance.chain,Chain.instance.accountManager.accounts)
 });
 peermanager.on('Nuevopeer',id => {
+  if(Chain.instance.log){
+    console.log("Nuevo peer conectado",id)
+  }
   peermanager.enviarCadena(Chain.instance.chain)
+  if(Chain.instance.log){
+    console.log("Cadena enviada")
+  }
   peermanager.enviarBlockpool(Chain.instance.blockpool)
+  if(Chain.instance.log){
+    console.log("Blockpool enviada")
+  }
 });
 module.exports = Chain;
