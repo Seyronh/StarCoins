@@ -72,13 +72,14 @@ class Chain {
     minar(publicKey){
       let blockss = this.blockpool
       if(blockss.length <= 0) return;
-      this.accountManager.increment(publicKey,blockss.length/2)
-      blockss[blockss.length-1].accounts = this.accountManager.accounts;
       let blockmined = []
       for(let i = 0;i<blockss.length;i++){
         let block = blockss[i]
         if(this.log){
           console.log(`Comenzado a minar el bloque: ${i+1}/${blockss.length} con dificultad: ${block.difficulty}`)
+        }
+        if(this.accountManager.getBalance(block.transaction.recieverPublicKey)-block.transaction.amount<0){
+          return;
         }
         this.accountManager.increment(block.transaction.recieverPublicKey,block.transaction.amount)
         this.accountManager.decrement(block.transaction.senderPublicKey,block.transaction.amount)
@@ -94,7 +95,9 @@ class Chain {
         }
         blockmined.push(block)
       }
+      this.blockpool = []
       this.chain = this.chain.concat(blockmined);
+      this.accountManager.increment(publicKey,blockss.length/2)
       saveloadsystem.save(this.blockpool,this.chain,this.accountManager.accounts)
       peermanager.enviarCadena(this.chain);
       if(this.log){
