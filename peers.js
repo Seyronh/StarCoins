@@ -13,6 +13,7 @@ class PeerManager extends EventEmitter {
     }
     listen(){
         this.sw.on('peer', function (peer, id) {
+            this.emit('Nuevopeer',id)
             peer.on('data', data => {
                 this.recibirDatos(data)
             })
