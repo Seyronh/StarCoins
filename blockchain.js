@@ -52,6 +52,10 @@ class Chain {
               valida = false;
               break;
             }
+            if(blockchain[i-2].transaction.amount < 0.5 || blockchain[i-1].transaction.amount < 0.5 || blockchain[i].transaction.amount < 0.5){
+              valida = false;
+              break;
+            }
         }
         return valida;
     }
