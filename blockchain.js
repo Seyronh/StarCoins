@@ -78,7 +78,9 @@ class Chain {
         if(this.log){
           console.log(`Comenzado a minar el bloque: ${i+1}/${blockss.length} con dificultad: ${block.difficulty}`)
         }
-        if(this.accountManager.getBalance(block.transaction.recieverPublicKey)-block.transaction.amount<0){
+        block.transaction.senderPublicKey = block.transaction.senderPublicKey.replace(/\\n/g,'\n')
+        block.transaction.recieverPublicKey = block.transaction.recieverPublicKey.replace(/\\n/g,'\n')
+        if(this.accountManager.getBalance(block.transaction.senderPublicKey)-block.transaction.amount<0){
           return;
         }
         this.accountManager.increment(block.transaction.recieverPublicKey,block.transaction.amount)
